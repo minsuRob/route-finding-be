@@ -7,16 +7,25 @@ import {
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { JwtMiddleware } from './jwt/jwt.middleware';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [],
+  imports: [
+    GraphQLModule.forRoot<ApolloDriverConfig>({
+      driver: ApolloDriver,
+      autoSchemaFile: true,
+    }),
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(JwtMiddleware)
-      .forRoutes({ path: '/graphql', method: RequestMethod.POST });
+    consumer;
+    // .apply(JwtMiddleware)
+    // .forRoutes({ path: '/graphql', method: RequestMethod.POST });
   }
 }
