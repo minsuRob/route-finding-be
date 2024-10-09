@@ -9,7 +9,7 @@ import { AppService } from './app.service';
 import { JwtMiddleware } from './jwt/jwt.middleware';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UsersModule } from './users/users.module';
+import { UserModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -17,7 +17,7 @@ import { UsersModule } from './users/users.module';
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
-    UsersModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
