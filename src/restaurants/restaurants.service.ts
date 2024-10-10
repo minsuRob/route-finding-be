@@ -60,9 +60,11 @@ export class RestaurantService {
     editRestaurantInput: EditRestaurantInput,
   ): Promise<EditRestaurantOutput> {
     try {
-      const restaurant = await this.restaurants.findOne(
-        editRestaurantInput.restaurantId,
-      );
+      const restaurant = await this.restaurants.findOne({
+        where: {
+          id: editRestaurantInput.restaurantId,
+        },
+      });
       if (!restaurant) {
         return {
           ok: false,
@@ -107,7 +109,9 @@ export class RestaurantService {
     { restaurantId }: DeleteRestaurantInput,
   ): Promise<DeleteRestaurantOutput> {
     try {
-      const restaurant = await this.restaurants.findOne(restaurantId);
+      const restaurant = await this.restaurants.findOne({
+        where: { id: restaurantId },
+      });
       if (!restaurant) {
         return {
           ok: false,
@@ -150,7 +154,7 @@ export class RestaurantService {
   }
 
   countRestaurants(category: Category) {
-    return this.restaurants.count({ category });
+    return this.restaurants.count({ where: { category } });
   }
 
   async findCategoryBySlug({
@@ -158,7 +162,7 @@ export class RestaurantService {
     page,
   }: CategoryInput): Promise<CategoryOutput> {
     try {
-      const category = await this.categories.findOne({ slug });
+      const category = await this.categories.findOne({ where: { slug } });
       if (!category) {
         return {
           ok: false,
@@ -215,7 +219,9 @@ export class RestaurantService {
     restaurantId,
   }: RestaurantInput): Promise<RestaurantOutput> {
     try {
-      const restaurant = await this.restaurants.findOne(restaurantId);
+      const restaurant = await this.restaurants.findOne({
+        where: { id: restaurantId },
+      });
       if (!restaurant) {
         return {
           ok: false,
@@ -243,7 +249,7 @@ export class RestaurantService {
       const [restaurants, totalResults] = await this.restaurants.findAndCount({
         where: {
           // name: Raw(name => `%${name} ILIKE '%${qeury}'`),
-          name: Raw(name => `${name} ILIKE '%${query}%'`),
+          name: Raw((name) => `${name} ILIKE '%${query}%'`),
         },
         skip: (page - 1) * 3,
         take: 3,
