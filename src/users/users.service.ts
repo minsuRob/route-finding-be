@@ -12,11 +12,11 @@ export class UsersService {
 
   async createAccount({ email, password, role }: CreateAccountInput) {
     try {
-      //   const exists = await this.users.findOne({ email });
+      const exists = await this.users.findOne({ where: { email } });
 
-      //   if (exists) {
-      //     return;
-      //   }
+      if (exists) {
+        return;
+      }
 
       await this.users.save(this.users.create({ email, password, role }));
       return true;
