@@ -1,9 +1,20 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
+import { User } from './entities/user.entity';
+import {
+  CreateAccountInput,
+  CreateAccountOutput,
+} from './dtos/create-account.dto';
+import { UsersService } from './users.service';
 
-@Resolver()
-export class UserResolver {
+@Resolver((of) => User)
+export class UsersResolver {
+  constructor(private readonly userService: UsersService) {}
+
   @Query((returns) => Boolean)
-  isPizzaGood(): Boolean {
+  hi() {
     return true;
   }
+
+  @Mutation((returns) => CreateAccountOutput)
+  createAccount(@Args('input') createAccountInput: CreateAccountInput) {}
 }

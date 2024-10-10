@@ -9,9 +9,9 @@ import { AppService } from './app.service';
 import { JwtMiddleware } from './jwt/jwt.middleware';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
-import { UserModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -33,7 +33,7 @@ import { ConfigModule } from '@nestjs/config';
       logging: process.env.NODE_ENV !== 'prod',
       // entities: [User, Verification, Restaurant, Category],
     }),
-    UserModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],
