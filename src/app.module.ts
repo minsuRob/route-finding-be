@@ -15,6 +15,7 @@ import { UsersModule } from './users/users.module';
 import { CommonModule } from './common/common.module';
 import { User } from './users/entities/user.entity';
 import * as Joi from 'joi';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [
@@ -51,14 +52,15 @@ import * as Joi from 'joi';
     }),
     UsersModule,
     CommonModule,
+    JwtModule.forRoot({ privateKey: process.env.PRIVATE_KEY }),
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer;
-    // .apply(JwtMiddleware)
-    // .forRoutes({ path: '/graphql', method: RequestMethod.POST });
+    consumer
+      .apply(JwtMiddleware)
+      .forRoutes({ path: '/graphql', method: RequestMethod.POST });
   }
 }
