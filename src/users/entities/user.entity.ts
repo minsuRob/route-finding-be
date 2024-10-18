@@ -96,7 +96,7 @@ export class User extends CoreEntity {
   @Column({ default: true })
   @Field((type) => Boolean)
   @IsBoolean()
-  isAllow: boolean; // auth
+  isAllowAuth: boolean; // auth
 
   // home zym
 
