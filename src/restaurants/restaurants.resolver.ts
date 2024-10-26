@@ -34,10 +34,10 @@ import {
   SearchRestaurantOutput,
 } from './dtos/search-restaurant.dto';
 
-@Resolver(of => Restaurant)
+@Resolver((of) => Restaurant)
 export class RestaurantResolver {
   constructor(private readonly restaurantService: RestaurantService) {}
-  @Mutation(returns => CreateRestaurantOutput)
+  @Mutation((returns) => CreateRestaurantOutput)
   async createRestaurant(
     @AuthUser() authUser: User,
     @Args('input') createRestaurantInput: CreateRestaurantInput,
@@ -48,7 +48,7 @@ export class RestaurantResolver {
     );
   }
 
-  @Mutation(returns => EditRestaurantOutput)
+  @Mutation((returns) => EditRestaurantOutput)
   @Role(['Owner'])
   editRestaurant(
     @AuthUser() owner: User,
@@ -57,7 +57,7 @@ export class RestaurantResolver {
     return this.restaurantService.editRestaurant(owner, editRestaurantInput);
   }
 
-  @Mutation(returns => DeleteRestaurantOutput)
+  @Mutation((returns) => DeleteRestaurantOutput)
   @Role(['Owner'])
   deleteRestaurant(
     @AuthUser() owner: User,
@@ -70,42 +70,42 @@ export class RestaurantResolver {
   }
 }
 
-@Resolver(of => Category)
+@Resolver((of) => Category)
 export class CategoriesResolver {
   constructor(private readonly restaurantService: RestaurantService) {}
 
-  @ResolveField(type => Int)
+  @ResolveField((type) => Int)
   restaurantCount(@Parent() category: Category): Promise<number> {
     return this.restaurantService.countRestaurants(category);
   }
 
-  @Query(type => AllCategoriesOutput)
+  @Query((type) => AllCategoriesOutput)
   allCategories(): Promise<AllCategoriesOutput> {
     return this.restaurantService.allCategories();
   }
 
-  @Query(type => CategoryOutput)
+  @Query((type) => CategoryOutput)
   category(
     @Args('input') categoryInput: CategoryInput,
   ): Promise<CategoryOutput> {
     return this.restaurantService.findCategoryBySlug(categoryInput);
   }
 
-  @Query(returns => RestaurantsOutput)
+  @Query((returns) => RestaurantsOutput)
   restaurants(
     @Args('input') restaurantsInput: RestaurantsInput,
   ): Promise<RestaurantsOutput> {
     return this.restaurantService.allRestaurants(restaurantsInput);
   }
 
-  @Query(returns => RestaurantOutput)
+  @Query((returns) => RestaurantOutput)
   restaurant(
     @Args('input') restaurantInput: RestaurantInput,
   ): Promise<RestaurantOutput> {
     return this.restaurantService.findRestaurantById(restaurantInput);
   }
 
-  @Query(returns => SearchRestaurantOutput)
+  @Query((returns) => SearchRestaurantOutput)
   searchRestaurant(
     @Args('input') searchRestaurantInput: SearchRestaurantInput,
   ): Promise<SearchRestaurantOutput> {

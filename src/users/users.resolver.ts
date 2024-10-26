@@ -14,30 +14,30 @@ import { EditProfileInput, EditProfileOutput } from './dtos/edit-profile.dto';
 import { VerifyEmailInput, VerifyEmailOutput } from './dtos/verify-email.dto';
 import { Role } from 'src/auth/role.decorator';
 
-@Resolver(of => User)
+@Resolver((of) => User)
 export class UserResolver {
   constructor(private readonly usersService: UserService) {}
 
-  @Mutation(returns => CreateAccountOutput)
+  @Mutation((returns) => CreateAccountOutput)
   async createAccount(
     @Args('input') createAccountInput: CreateAccountInput,
   ): Promise<CreateAccountOutput> {
     return this.usersService.createAccount(createAccountInput);
   }
 
-  @Mutation(returns => LoginOutput)
+  @Mutation((returns) => LoginOutput)
   async login(@Args('input') loginInput: LoginInput): Promise<LoginOutput> {
     return await this.usersService.login(loginInput);
   }
 
   @Role(['Any'])
-  @Query(returns => User)
+  @Query((returns) => User)
   me(@AuthUser() authUser: User) {
     return authUser;
   }
 
   @Role(['Any'])
-  @Query(returns => UserProfileOutput)
+  @Query((returns) => UserProfileOutput)
   async userProfile(
     @Args() userProfileInput: UserProfileInput,
   ): Promise<UserProfileOutput> {
@@ -45,7 +45,7 @@ export class UserResolver {
   }
 
   @Role(['Any'])
-  @Mutation(returns => EditProfileOutput)
+  @Mutation((returns) => EditProfileOutput)
   async editProfile(
     @AuthUser() authUser: User,
     @Args('input') editProfileInput: EditProfileInput,
@@ -53,7 +53,7 @@ export class UserResolver {
     return this.usersService.editProfile(authUser.id, editProfileInput);
   }
 
-  @Mutation(returns => VerifyEmailOutput)
+  @Mutation((returns) => VerifyEmailOutput)
   verifyEmail(
     @Args('input') { code }: VerifyEmailInput,
   ): Promise<VerifyEmailOutput> {
