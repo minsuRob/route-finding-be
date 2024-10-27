@@ -81,7 +81,7 @@ export class User extends CoreEntity {
   @Field((type) => Number, { nullable: true })
   @Column({ default: 0 })
   @IsNumber()
-  followering: number;
+  following: number;
 
   @Field((type) => String, { nullable: true })
   @Column({ default: '' })
